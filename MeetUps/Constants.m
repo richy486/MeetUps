@@ -13,9 +13,8 @@ NSString *const RUN_COUNT_USER_DEFAULT_KEY = @"runCount";
 NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY = @"hasShownOnboarding";
 
 // Api
-NSString *const API_URL_KEY = @"MeetUpApiUrl";
-NSString *const API_SIG_ID_KEY = @"MeetUpApiSigId";
-NSString *const API_SIG_KEY = @"MeetUpApiSig";
+NSString *const API_URL_PLIST_KEY = @"MeetUpApiUrl";
+NSString *const API_KEY_PLIST_KEY = @"MeetUpApiKey";
 
 
 // segues

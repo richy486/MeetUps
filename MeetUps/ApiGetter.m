@@ -17,14 +17,13 @@
 
 @implementation ApiGetter
 
-- (void) getMeetUpsUsingEndpoint:(NSString*) endpointString withCompletion:(ApiCompletionBlock) completion {
+- (void) getUsingEndpoint:(NSString*) endpointString withCompletion:(ApiCompletionBlock) completion {
     if (endpointString) {
         
         self.completionBlock = completion;
-        NSString *apiUrl = [[NSBundle mainBundle] objectForInfoDictionaryKey:API_URL_KEY];
-        NSString *apiSigId = [[NSBundle mainBundle] objectForInfoDictionaryKey:API_SIG_ID_KEY];
-        NSString *apiSig = [[NSBundle mainBundle] objectForInfoDictionaryKey:API_SIG_KEY];
-        NSString *urlString = [NSString stringWithFormat:@"%@/%@&sig_id=%@&sig=%@", apiUrl, endpointString, apiSigId, apiSig];
+        NSString *apiUrl = [[NSBundle mainBundle] objectForInfoDictionaryKey:API_URL_PLIST_KEY];
+        NSString *apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:API_KEY_PLIST_KEY];
+        NSString *urlString = [NSString stringWithFormat:@"%@/%@&key=%@", apiUrl, endpointString, apiKey];
         
         NSURL *url = [NSURL URLWithString:urlString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -48,6 +47,7 @@
         NSError *error = nil;
         id jsonObject = [NSJSONSerialization JSONObjectWithData:_container options:0 error:&error];
         if (error) {
+            NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
             self.completionBlock(nil, error);
         } else {
             self.completionBlock(jsonObject, nil);

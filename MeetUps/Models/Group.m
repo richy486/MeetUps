@@ -15,6 +15,7 @@
     if (self) {
         self.name = dict[@"name"];
         self.groupId = dict[@"id"];
+
     }
     return self;
 }

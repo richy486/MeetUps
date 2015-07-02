@@ -10,6 +10,8 @@
 #import "OnboardingViewController.h"
 #import "ApiGetter.h"
 #import "Event.h"
+#import "Group.h"
+#import "UITableViewCell+LazyLoading.h"
 #import <CoreLocation/CoreLocation.h>
 
 NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
@@ -19,7 +21,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) ApiGetter *getter;
+//@property (nonatomic, strong) ApiGetter *getter;
 @property (nonatomic, strong) NSArray *events;
 @end
 
@@ -64,6 +66,15 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (IBAction)unwindToContainerVC:(UIStoryboardSegue *)segue {
 }
 
+#pragma mark - Private methods
+
+//- (ApiGetter*) getter {
+//    if (!_getter) {
+//        _getter = [[ApiGetter alloc] init];
+//    }
+//    return _getter;
+//}
+
 #pragma mark - 
 
 - (void) showErrorMessage:(NSString*) errorMessage {
@@ -80,10 +91,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     NSString *latString = [NSString stringWithFormat:@"%.8f", coordinate.latitude];
     NSString *lngString = [NSString stringWithFormat:@"%.8f", coordinate.longitude];
 
-    if (!self.getter) {
-        self.getter = [[ApiGetter alloc] init];
-    }
-    
     NSString *endpoint = [NSString stringWithFormat:@"2/open_events?and_text=False&offset=0&format=json"
                           "&lat=%@"
                           "&lon=%@"
@@ -92,9 +99,13 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
                           , lngString];
     
 
-    [self.getter getMeetUpsUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
+    ApiGetter *getter = [[ApiGetter alloc] init];
+    [getter getUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
 
         if (error || !jsonObject[@"results"]) {
+            if (error) {
+                NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+            }
             [self showErrorMessage:NSLocalizedString(@"errorMessageApiConnection", @"")];
         } else {
             [self hideErrorMessage];
@@ -104,6 +115,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
             NSMutableArray *events = [NSMutableArray arrayWithCapacity:results.count];
             for (NSDictionary *eventDict in results) {
                 Event *event = [[Event alloc] initWithDictionary:eventDict];
+                // TODO: add sorting
                 [events addObject:event];
             }
             self.events = events;
@@ -111,6 +123,50 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
         }
         
     }];
+}
+
+- (void) getGroupPhotoForEvent:(Event*) event {
+    if (event) {
+        NSString *endpoint = [NSString stringWithFormat:@"2/photos?offset=0&format=json&photo-host=public&page=20&fields=&order=time&desc=True"
+                              "&group_id=%@"
+                              , event.group.groupId];
+        ApiGetter *getter = [[ApiGetter alloc] init];
+        [getter getUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
+            if (error) {
+                NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+            } else {
+                
+                BOOL found = NO;
+                if (jsonObject[@"results"]) {
+                    NSArray *results = jsonObject[@"results"];
+                    if (results.count > 0) {
+                        NSDictionary *firstResult = [results firstObject];
+                        NSString *photoUrlString = firstResult[@"photo_link"];
+                        if (event && [self.events containsObject:event]) {
+                            event.group.photoUrl = [NSURL URLWithString:photoUrlString];
+                            
+                            NSUInteger index = [self.events indexOfObject:event];
+                            if (index != NSNotFound) {
+                                NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
+                                for (NSIndexPath *indexPath in indexPaths) {
+                                    if (indexPath.row == index) {
+                                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            found = YES;
+                        }
+                    }
+                }
+                
+                if (!found) {
+                    event.group.photoUrl = [[NSURL alloc] init];
+                }
+            }
+        }];
+    }
 }
 
 #pragma mark - Table view data source
@@ -126,14 +182,30 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MEET_UPS_CELL_IDENTIFIER];
     
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    
     Event *event = self.events[indexPath.row];
     
     cell.textLabel.text = event.name;
+    cell.detailTextLabel.text = event.group.name;
+    
+    if (event.group.photoUrl) {
+        
+        [cell setBackgroundImageWithUrl:event.group.photoUrl];
+    } else {
+        cell.backgroundColor = [UIColor whiteColor];
+        [self getGroupPhotoForEvent:event];
+    }
     
     return cell;
 }
 
 #pragma mark - Table view delegate
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark - CLLocation manager delegate
 

@@ -13,9 +13,8 @@ extern NSString *const RUN_COUNT_USER_DEFAULT_KEY;
 extern NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY;
 
 // Api
-extern NSString *const API_URL_KEY;
-extern NSString *const API_SIG_ID_KEY;
-extern NSString *const API_SIG_KEY;
+extern NSString *const API_URL_PLIST_KEY;
+extern NSString *const API_KEY_PLIST_KEY;
 
 
 // segues

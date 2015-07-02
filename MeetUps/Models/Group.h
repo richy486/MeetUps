@@ -13,6 +13,9 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *groupId;
 
+// Extra
+@property (nonatomic, strong) NSURL *photoUrl;
+
 - (id) initWithDictionary:(NSDictionary*) dict;
 
 @end

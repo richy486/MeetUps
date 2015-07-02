@@ -12,6 +12,6 @@
 
 typedef void (^ApiCompletionBlock)(id jsonObject, NSError *error);
 
-- (void) getMeetUpsUsingEndpoint:(NSString*) endpointString withCompletion:(ApiCompletionBlock) completion;
+- (void) getUsingEndpoint:(NSString*) endpointString withCompletion:(ApiCompletionBlock) completion;
 
 @end
