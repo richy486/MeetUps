@@ -45,8 +45,13 @@
     
     if (self.completionBlock) {
         
-        NSString *resultString = [[NSString alloc] initWithData:_container encoding:NSUTF8StringEncoding];
-        self.completionBlock(resultString, nil);
+        NSError *error = nil;
+        id jsonObject = [NSJSONSerialization JSONObjectWithData:_container options:0 error:&error];
+        if (error) {
+            self.completionBlock(nil, error);
+        } else {
+            self.completionBlock(jsonObject, nil);
+        }
     }
 }
 

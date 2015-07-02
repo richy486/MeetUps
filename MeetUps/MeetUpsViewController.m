@@ -9,6 +9,7 @@
 #import "MeetUpsViewController.h"
 #import "OnboardingViewController.h"
 #import "ApiGetter.h"
+#import "Event.h"
 #import <CoreLocation/CoreLocation.h>
 
 NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
@@ -19,7 +20,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) ApiGetter *getter;
-@property (nonatomic, strong) NSArray *meetUps;
+@property (nonatomic, strong) NSArray *events;
 @end
 
 @implementation MeetUpsViewController
@@ -27,14 +28,8 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    // TODO: replace this with first run check
-//    if ([[LocationManager sharedInstance] isAuthorized]) {
-//        // TODO: get location
-//    } else {
-//        [self performSegueWithIdentifier:ONBOARDING_SEGUE_IDENTIFIER sender:self];
-//    }
-    
-    
+    self.title = NSLocalizedString(@"eventsTitle", @"");
+    [self hideErrorMessage];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -73,10 +68,12 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
 - (void) showErrorMessage:(NSString*) errorMessage {
     [self.tableView setHidden:YES];
+    [self.errorMessageLabel setHidden:NO];
     self.errorMessageLabel.text = errorMessage;
 }
 - (void) hideErrorMessage {
     [self.tableView setHidden:NO];
+    [self.errorMessageLabel setHidden:YES];
 }
 
 - (void) getMeetupsWithCoordinate:(CLLocationCoordinate2D) coordinate {
@@ -95,8 +92,23 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
                           , lngString];
     
 
-    [self.getter getMeetUpsUsingEndpoint:endpoint withCompletion:^(NSString *result, NSError *error) {
-        NSLog(@"result: %@", result);
+    [self.getter getMeetUpsUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
+
+        if (error || !jsonObject[@"results"]) {
+            [self showErrorMessage:NSLocalizedString(@"errorMessageApiConnection", @"")];
+        } else {
+            [self hideErrorMessage];
+
+            // Put the json results into Event models
+            NSArray *results = jsonObject[@"results"];
+            NSMutableArray *events = [NSMutableArray arrayWithCapacity:results.count];
+            for (NSDictionary *eventDict in results) {
+                Event *event = [[Event alloc] initWithDictionary:eventDict];
+                [events addObject:event];
+            }
+            self.events = events;
+            [self.tableView reloadData];
+        }
         
     }];
 }
@@ -104,8 +116,8 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 #pragma mark - Table view data source
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.meetUps) {
-        return self.meetUps.count;
+    if (self.events) {
+        return self.events.count;
     }
     
     return 0;
@@ -113,6 +125,11 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MEET_UPS_CELL_IDENTIFIER];
+    
+    Event *event = self.events[indexPath.row];
+    
+    cell.textLabel.text = event.name;
+    
     return cell;
 }
 
@@ -126,7 +143,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"didUpdateToLocation: %@", newLocation);
     CLLocation *currentLocation = newLocation;
 
     if (currentLocation != nil) {

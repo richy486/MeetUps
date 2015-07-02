@@ -10,7 +10,7 @@
 
 @interface ApiGetter : NSObject
 
-typedef void (^ApiCompletionBlock)(NSString *result, NSError *error);
+typedef void (^ApiCompletionBlock)(id jsonObject, NSError *error);
 
 - (void) getMeetUpsUsingEndpoint:(NSString*) endpointString withCompletion:(ApiCompletionBlock) completion;
 
