@@ -7,6 +7,7 @@
 */
 
 "errorMessageLocationAccess" = "This app needs to use your location to function properly, please check your location settings in Settings.";
+"errorMessageLocationConnection" = "Problem finding user location, please check your settings and try again.";
 
 "onboardingDescription" = "This app needs to use your location to function properly, please consider allowing access when prompted.";
 "onboardingContinueButton" = "Sure!";

@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 // user defaults
-extern NSString *const RUN_COUNT_USER_DEFAULT;
-extern NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT;
+extern NSString *const RUN_COUNT_USER_DEFAULT_KEY;
+extern NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY;
+
+// Api
+extern NSString *const API_URL_KEY;
+extern NSString *const API_SIG_ID_KEY;
+extern NSString *const API_SIG_KEY;
+
 
 // segues
 extern NSString *const ONBOARDING_SEGUE_IDENTIFIER;

@@ -7,7 +7,6 @@
 //
 
 #import "OnboardingViewController.h"
-#import "LocationManager.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface OnboardingViewController() <CLLocationManagerDelegate>

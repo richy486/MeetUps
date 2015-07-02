@@ -43,5 +43,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>MeetUpApiUrl</key>
+	<string>https://api.meetup.com</string>
+    <key>MeetUpApiSigId</key>
+    <string>14248588</string>
+    <key>MeetUpApiSig</key>
+    <string>bface2d6c8efe0501d8187f40151cfb497af9f7f</string>
 </dict>
 </plist>

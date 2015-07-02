@@ -8,7 +8,7 @@
 
 #import "MeetUpsViewController.h"
 #import "OnboardingViewController.h"
-#import "LocationManager.h"
+#import "ApiGetter.h"
 #import <CoreLocation/CoreLocation.h>
 
 NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
@@ -16,9 +16,9 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 @interface MeetUpsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
-
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) ApiGetter *getter;
 @property (nonatomic, strong) NSArray *meetUps;
 @end
 
@@ -42,14 +42,19 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
     // Show the onboarding screen if this is the first time the app has run
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL hasShownOnboarding = [defaults boolForKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT];
+    BOOL hasShownOnboarding = [defaults boolForKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
     if (!hasShownOnboarding) {
         [self performSegueWithIdentifier:ONBOARDING_SEGUE_IDENTIFIER sender:self];
-        [defaults setBool:YES forKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT];
+        [defaults setBool:YES forKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
         [defaults synchronize];
     } else {
         if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
-            // TODO: get location
+
+            if (!self.locationManager) {
+                self.locationManager = [[CLLocationManager alloc] init];
+                self.locationManager.delegate = self;
+                [self.locationManager startUpdatingLocation];
+            }
         } else {
             [self showErrorMessage:NSLocalizedString(@"errorMessageLocationAccess", @"")];
         }
@@ -62,7 +67,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 }
 
 - (IBAction)unwindToContainerVC:(UIStoryboardSegue *)segue {
-    NSLog(@"unwinded");
 }
 
 #pragma mark - 
@@ -73,6 +77,28 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 }
 - (void) hideErrorMessage {
     [self.tableView setHidden:NO];
+}
+
+- (void) getMeetupsWithCoordinate:(CLLocationCoordinate2D) coordinate {
+    NSString *latString = [NSString stringWithFormat:@"%.8f", coordinate.latitude];
+    NSString *lngString = [NSString stringWithFormat:@"%.8f", coordinate.longitude];
+
+    if (!self.getter) {
+        self.getter = [[ApiGetter alloc] init];
+    }
+    
+    NSString *endpoint = [NSString stringWithFormat:@"2/open_events?and_text=False&offset=0&format=json"
+                          "&lat=%@"
+                          "&lon=%@"
+                          "&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming"
+                          , latString
+                          , lngString];
+    
+
+    [self.getter getMeetUpsUsingEndpoint:endpoint withCompletion:^(NSString *result, NSError *error) {
+        NSLog(@"result: %@", result);
+        
+    }];
 }
 
 #pragma mark - Table view data source
@@ -91,6 +117,24 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 }
 
 #pragma mark - Table view delegate
+
+#pragma mark - CLLocation manager delegate
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [self showErrorMessage:NSLocalizedString(@"errorMessageLocationConnection", @"")];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+
+    if (currentLocation != nil) {
+        [manager stopUpdatingLocation];
+        [self getMeetupsWithCoordinate:currentLocation.coordinate];
+        
+    }
+}
 
 #pragma mark - Memory manager
 

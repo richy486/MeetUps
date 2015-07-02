@@ -24,9 +24,9 @@
     [defaults registerDefaults:defaultPrefs];
     
     // Record the run count
-    NSInteger runCount = [defaults integerForKey:RUN_COUNT_USER_DEFAULT];
+    NSInteger runCount = [defaults integerForKey:RUN_COUNT_USER_DEFAULT_KEY];
     runCount++;
-    [defaults setInteger:runCount forKey:RUN_COUNT_USER_DEFAULT];
+    [defaults setInteger:runCount forKey:RUN_COUNT_USER_DEFAULT_KEY];
     [defaults synchronize];
     
     return YES;

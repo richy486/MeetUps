@@ -9,8 +9,14 @@
 #include "Constants.h"
 
 // user defaults
-NSString *const RUN_COUNT_USER_DEFAULT = @"runCount";
-NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT = @"hasShownOnboarding";
+NSString *const RUN_COUNT_USER_DEFAULT_KEY = @"runCount";
+NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY = @"hasShownOnboarding";
+
+// Api
+NSString *const API_URL_KEY = @"MeetUpApiUrl";
+NSString *const API_SIG_ID_KEY = @"MeetUpApiSigId";
+NSString *const API_SIG_KEY = @"MeetUpApiSig";
+
 
 // segues
 NSString *const ONBOARDING_SEGUE_IDENTIFIER = @"onboarding";
