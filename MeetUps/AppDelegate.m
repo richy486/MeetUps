@@ -16,7 +16,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    // Setup default values for user defaults from plist file
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSURL *defaultPrefsFile = [[NSBundle mainBundle] URLForResource:@"DefaultPreferences" withExtension:@"plist"];
+    NSDictionary *defaultPrefs = [NSDictionary dictionaryWithContentsOfURL:defaultPrefsFile];
+    [defaults registerDefaults:defaultPrefs];
+    
+    // Record the run count
+    NSInteger runCount = [defaults integerForKey:RUN_COUNT_USER_DEFAULT];
+    runCount++;
+    [defaults setInteger:runCount forKey:RUN_COUNT_USER_DEFAULT];
+    [defaults synchronize];
+    
     return YES;
 }
 

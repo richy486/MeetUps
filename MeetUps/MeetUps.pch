@@ -1,0 +1,13 @@
+//
+//  MeetUps.pch
+//  MeetUps
+//
+//  Created by Richard Adem on 2/07/2015.
+//  Copyright (c) 2015 Richard Adem. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import "Constants.h"
+#endif

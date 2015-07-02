@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  MeetUps
+
+  Created by Richard Adem on 2/07/2015.
+  Copyright (c) 2015 Richard Adem. All rights reserved.
+*/
+
+"errorMessageLocationAccess" = "This app needs to use your location to function properly, please check your location settings in Settings.";
+
+"onboardingDescription" = "This app needs to use your location to function properly, please consider allowing access when prompted.";
+"onboardingContinueButton" = "Sure!";
