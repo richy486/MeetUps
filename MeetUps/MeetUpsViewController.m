@@ -92,9 +92,11 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     NSString *lngString = [NSString stringWithFormat:@"%.8f", coordinate.longitude];
 
     NSString *endpoint = [NSString stringWithFormat:@"2/open_events?and_text=False&offset=0&format=json"
+                          "&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming"
+                          "&category=34"
                           "&lat=%@"
                           "&lon=%@"
-                          "&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming"
+                          
                           , latString
                           , lngString];
     
