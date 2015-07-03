@@ -26,3 +26,5 @@
 // Event detail
 "eventDetailTitle" = "Event";
 "venue" = "Venue";
+"eventEnded" = "Ended";
+"eventStarted" = "Started";

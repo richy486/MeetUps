@@ -50,23 +50,44 @@
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             dateFormatter.dateStyle = kCFDateFormatterMediumStyle;
             dateFormatter.timeStyle = NSDateFormatterShortStyle;
-            self.timeLabel.text = [dateFormatter stringFromDate:self.event.time];
+            NSString *dateString = [dateFormatter stringFromDate:self.event.time];
+            
+            if ([[self.event.time dateByAddingTimeInterval:self.event.duration] timeIntervalSinceNow] < 0.0) {
+                self.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", dateString, NSLocalizedString(@"eventEnded", @"")];
+                self.timeLabel.textColor = [UIColor redColor];
+            } else if ([self.event.time timeIntervalSinceNow] < 0.0) {
+                self.timeLabel.text = [NSString stringWithFormat:@"%@ - %@", dateString, NSLocalizedString(@"eventStarted", @"")];
+                self.timeLabel.textColor = [UIColor orangeColor];
+            } else {
+                self.timeLabel.text = dateString;
+            }
+        } else {
+            self.timeLabel.text = @"";
         }
         
-        self.venueLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"venue", @""), self.event.venueName];
-        
-        NSError *error = nil;
-        
-        NSString *modifiedHtml = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 15\">%@</span>", self.event.descriptionHtml];
-        NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[modifiedHtml dataUsingEncoding:NSUTF8StringEncoding]
-                                                                                 options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                                                           NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)}
-                                                                      documentAttributes:nil
-                                                                                   error:&error];
-        if (error) {
-            NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+        if (self.event.venueName) {
+            self.venueLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"venue", @""), self.event.venueName];
         } else {
-            [self.descritionTextView setAttributedText:descriptionString];
+            self.venueLabel.text = @"";
+        }
+        
+        if (self.event.descriptionHtml) {
+            NSError *error = nil;
+            
+            NSString *modifiedHtml = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 15\">%@</span>", self.event.descriptionHtml];
+            NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[modifiedHtml dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                               NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)}
+                                                                          documentAttributes:nil
+                                                                                       error:&error];
+            if (error) {
+                NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+                self.descritionTextView.text = @"";
+            } else {
+                [self.descritionTextView setAttributedText:descriptionString];
+            }
+        } else {
+            self.descritionTextView.text = @"";
         }
     }
 }
