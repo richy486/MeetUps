@@ -22,14 +22,25 @@
 - (void) setBackgroundImage:(UIImage*) image {
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        UIImage *semiTransparentImage = [image imageByApplyingColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
+        UIImage *processedImage = [image imageByApplyingColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
+        
+        // Just get the section of the image that is shown
+        CGImageRef imageRef = CGImageCreateWithImageInRect(processedImage.CGImage, self.bounds);
+        UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+        
+        CGFloat luminance = [croppedImage luminance];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.backgroundColor = [UIColor colorWithPatternImage:semiTransparentImage];
+            self.backgroundColor = [UIColor colorWithPatternImage:processedImage];
+
+            if (luminance > 0.05) {
+                self.textLabel.textColor = [UIColor whiteColor];
+                self.detailTextLabel.textColor = [UIColor whiteColor];
+                
+            }
         });
     });
-    
-    self.textLabel.textColor = [UIColor whiteColor];
-    self.detailTextLabel.textColor = [UIColor whiteColor];
 }
 
 
