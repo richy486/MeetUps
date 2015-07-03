@@ -19,7 +19,13 @@
             self.group = [[Group alloc] initWithDictionary:dict[@"group"]];
         }
         self.descriptionHtml = dict[@"description"];
+        self.distance = dict[@"distance"];
     }
     return self;
 }
+
+- (NSString*) description {
+    return [NSString stringWithFormat:@"%@, name: %@, distance: %.02f", [super description], self.name, [self.distance floatValue]];
+}
+
 @end

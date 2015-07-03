@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) Group *group;
 @property (nonatomic, strong) NSString *descriptionHtml;
+@property (nonatomic, strong) NSNumber *distance;
+
 
 - (id) initWithDictionary:(NSDictionary*) dict;
 

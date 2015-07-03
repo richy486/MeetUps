@@ -144,14 +144,25 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
             
         } else {
             [self hideErrorMessage];
+            
+            NSComparator distanceComparator = ^(Event *eventA, Event *eventB) {
+                NSComparisonResult comparisonResult = [eventA.distance compare:eventB.distance];
+                
+                return comparisonResult;
+            };
 
             // Put the json results into Event models
             NSArray *results = jsonObject[@"results"];
             NSMutableArray *events = [NSMutableArray arrayWithCapacity:results.count];
             for (NSDictionary *eventDict in results) {
                 Event *event = [[Event alloc] initWithDictionary:eventDict];
-                // TODO: add sorting
-                [events addObject:event];
+                
+                // Sort on insertion
+                NSUInteger insertIndex = [events indexOfObject:event
+                                                 inSortedRange:(NSRange){0, events.count}
+                                                       options:NSBinarySearchingInsertionIndex
+                                               usingComparator:distanceComparator];
+                [events insertObject:event atIndex:insertIndex];
             }
             self.events = events;
             [self.tableView reloadData];

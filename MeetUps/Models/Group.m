@@ -20,4 +20,8 @@
     return self;
 }
 
+- (NSString*) description {
+    return [NSString stringWithFormat:@"%@, name: %@, id: %.02f", [super description], self.name, self.groupId];
+}
+
 @end
