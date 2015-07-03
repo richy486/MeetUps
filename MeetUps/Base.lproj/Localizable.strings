@@ -8,6 +8,7 @@
 
 // Common
 "back" = "Back";
+"done" = "Done";
 
 // Errors
 "errorMessageLocationAccess" = "This app needs to use your location to function properly, please check your location settings in Settings.";

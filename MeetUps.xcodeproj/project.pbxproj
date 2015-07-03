@@ -27,6 +27,7 @@
 		B91810BB1B45FC3C00C4357A /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810BA1B45FC3C00C4357A /* UIImage+Color.m */; };
 		B9B1143A1B469C5100CE4127 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B114391B469C5100CE4127 /* EventDetailViewController.m */; };
 		B9B1143D1B469CFF00CE4127 /* UIImage+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B1143C1B469CFF00CE4127 /* UIImage+LazyLoading.m */; };
+		B9B114431B47091300CE4127 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B114421B47091300CE4127 /* InfoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		B9B114391B469C5100CE4127 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		B9B1143B1B469CFF00CE4127 /* UIImage+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LazyLoading.h"; sourceTree = "<group>"; };
 		B9B1143C1B469CFF00CE4127 /* UIImage+LazyLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LazyLoading.m"; sourceTree = "<group>"; };
+		B9B114411B47091300CE4127 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		B9B114421B47091300CE4127 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				B9B114391B469C5100CE4127 /* EventDetailViewController.m */,
 				B91810961B45B02A00C4357A /* OnboardingViewController.h */,
 				B91810971B45B02A00C4357A /* OnboardingViewController.m */,
+				B9B114411B47091300CE4127 /* InfoViewController.h */,
+				B9B114421B47091300CE4127 /* InfoViewController.m */,
 				B918108E1B45AA6300C4357A /* ApiGetter.h */,
 				B918108F1B45AA6300C4357A /* ApiGetter.m */,
 				B91810721B4462F000C4357A /* Main.storyboard */,
@@ -305,6 +310,7 @@
 				B91810981B45B02A00C4357A /* OnboardingViewController.m in Sources */,
 				B91810BB1B45FC3C00C4357A /* UIImage+Color.m in Sources */,
 				B9B1143D1B469CFF00CE4127 /* UIImage+LazyLoading.m in Sources */,
+				B9B114431B47091300CE4127 /* InfoViewController.m in Sources */,
 				B9B1143A1B469C5100CE4127 /* EventDetailViewController.m in Sources */,
 				B918106E1B4462F000C4357A /* AppDelegate.m in Sources */,
 				B918106B1B4462F000C4357A /* main.m in Sources */,
