@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descritionTextView;
 
 @end
 
@@ -52,16 +52,16 @@
         if (error) {
             NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
         } else {
-            self.descriptionLabel.attributedText = descriptionString;
+            [self.descritionTextView setAttributedText:descriptionString];
         }
     }
 }
 
-    - (void) viewDidLayoutSubviews {
-        [super viewDidLayoutSubviews];
-        
-        self.scrollViewWidthConstraint.constant = CGRectGetWidth(self.scrollView.frame);
-    }
+- (void) viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.scrollViewWidthConstraint.constant = CGRectGetWidth(self.scrollView.frame);
+}
 
 #pragma mark - Memory manager
 

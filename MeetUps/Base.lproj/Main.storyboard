@@ -119,26 +119,28 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLg-ne-f3o">
-                                        <rect key="frame" x="8" y="199.5" width="584" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anl-Vi-9xX">
+                                        <rect key="frame" x="8" y="199" width="584" height="133"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                    </textView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="anl-Vi-9xX" secondAttribute="trailing" constant="8" id="3nb-cX-UI4"/>
                                     <constraint firstItem="aAh-o7-Rye" firstAttribute="leading" secondItem="QyM-RO-UvN" secondAttribute="leading" constant="8" id="7Zk-98-Jnp"/>
-                                    <constraint firstItem="DLg-ne-f3o" firstAttribute="top" secondItem="vvw-en-tn3" secondAttribute="bottom" constant="8.5" id="9kr-bs-NkZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="DLg-ne-f3o" secondAttribute="trailing" constant="8" id="B6H-au-hCd"/>
                                     <constraint firstItem="aAh-o7-Rye" firstAttribute="top" secondItem="2Wu-cm-DJK" secondAttribute="bottom" constant="8" id="BHc-VA-AaR"/>
+                                    <constraint firstItem="anl-Vi-9xX" firstAttribute="top" secondItem="vvw-en-tn3" secondAttribute="bottom" constant="8" id="CEY-rO-IhB"/>
                                     <constraint firstItem="2Wu-cm-DJK" firstAttribute="top" secondItem="QyM-RO-UvN" secondAttribute="top" id="G35-Cs-kcL"/>
-                                    <constraint firstItem="DLg-ne-f3o" firstAttribute="leading" secondItem="QyM-RO-UvN" secondAttribute="leading" constant="8" id="HJ1-zf-G8e"/>
                                     <constraint firstAttribute="trailing" secondItem="vvw-en-tn3" secondAttribute="trailing" constant="8" id="LMg-N9-bjQ"/>
                                     <constraint firstItem="vvw-en-tn3" firstAttribute="leading" secondItem="QyM-RO-UvN" secondAttribute="leading" constant="8" id="VN8-w3-HEp"/>
                                     <constraint firstAttribute="trailing" secondItem="2Wu-cm-DJK" secondAttribute="trailing" id="XDb-aD-YYF"/>
                                     <constraint firstItem="vvw-en-tn3" firstAttribute="top" secondItem="aAh-o7-Rye" secondAttribute="bottom" constant="8" id="Xjx-fo-mLK"/>
+                                    <constraint firstItem="anl-Vi-9xX" firstAttribute="leading" secondItem="QyM-RO-UvN" secondAttribute="leading" constant="8" id="aSN-Av-ZZU"/>
                                     <constraint firstItem="2Wu-cm-DJK" firstAttribute="leading" secondItem="QyM-RO-UvN" secondAttribute="leading" id="b7u-cP-jwT"/>
-                                    <constraint firstAttribute="bottom" secondItem="DLg-ne-f3o" secondAttribute="bottom" constant="8" id="vTg-qY-QO5"/>
+                                    <constraint firstAttribute="bottom" secondItem="anl-Vi-9xX" secondAttribute="bottom" constant="8" id="jdh-Xh-ag5"/>
                                     <constraint firstAttribute="trailing" secondItem="aAh-o7-Rye" secondAttribute="trailing" constant="8" id="wOF-BF-Acz"/>
                                 </constraints>
                             </scrollView>
@@ -155,7 +157,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="M0D-ew-Ycn"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="descriptionLabel" destination="DLg-ne-f3o" id="kVj-ov-c9f"/>
+                        <outlet property="descritionTextView" destination="anl-Vi-9xX" id="Uz7-G2-M4b"/>
                         <outlet property="groupNameLabel" destination="vvw-en-tn3" id="k0w-ZK-ZgK"/>
                         <outlet property="headerImageView" destination="2Wu-cm-DJK" id="wBw-HR-gRu"/>
                         <outlet property="scrollView" destination="QyM-RO-UvN" id="SH3-Ja-PkW"/>
