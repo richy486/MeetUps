@@ -12,5 +12,6 @@
 
 - (UIColor*) averageColor;
 - (CGFloat) luminance;
+- (UIImage*) imageByApplyingColor:(UIColor *)color;
 
 @end

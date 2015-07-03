@@ -47,4 +47,38 @@
     return luminance;
 }
 
+- (UIImage*) imageByApplyingColor:(UIColor *)color {
+    
+    
+    UIGraphicsBeginImageContext(self.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGRect imageRect = CGRectMake(0, 0, self.size.width, self.size.height);
+    
+    CGContextScaleCTM(context, 1, -1);
+    CGContextTranslateCTM(context, 0, -imageRect.size.height);
+    
+    CGContextSaveGState(context);
+    CGContextClipToMask(context, imageRect, self.CGImage);
+    
+    [color set];
+    CGContextFillRect(context, imageRect);
+    
+    CGContextRestoreGState(context);
+    
+    // alpha
+    CGFloat white, alpha;
+    [color getWhite:&white alpha:&alpha];
+
+    CGContextSetBlendMode(context, kCGBlendModeMultiply);
+    CGContextSetAlpha(context, alpha);
+    CGContextDrawImage(context, imageRect, self.CGImage);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 @end

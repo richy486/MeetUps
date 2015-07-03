@@ -25,7 +25,6 @@
 		B91810B01B45D93000C4357A /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810AF1B45D93000C4357A /* Group.m */; };
 		B91810B81B45FC2500C4357A /* UITableViewCell+Effects.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810B71B45FC2500C4357A /* UITableViewCell+Effects.m */; };
 		B91810BB1B45FC3C00C4357A /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810BA1B45FC3C00C4357A /* UIImage+Color.m */; };
-		B91810BE1B46021F00C4357A /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810BD1B46021F00C4357A /* UIImage+Alpha.m */; };
 		B9B1143A1B469C5100CE4127 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B114391B469C5100CE4127 /* EventDetailViewController.m */; };
 		B9B1143D1B469CFF00CE4127 /* UIImage+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B1143C1B469CFF00CE4127 /* UIImage+LazyLoading.m */; };
 /* End PBXBuildFile section */
@@ -73,8 +72,6 @@
 		B91810B71B45FC2500C4357A /* UITableViewCell+Effects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+Effects.m"; sourceTree = "<group>"; };
 		B91810B91B45FC3C00C4357A /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		B91810BA1B45FC3C00C4357A /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
-		B91810BC1B46021F00C4357A /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		B91810BD1B46021F00C4357A /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		B9B114381B469C5100CE4127 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
 		B9B114391B469C5100CE4127 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		B9B1143B1B469CFF00CE4127 /* UIImage+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LazyLoading.h"; sourceTree = "<group>"; };
@@ -194,8 +191,6 @@
 				B91810B71B45FC2500C4357A /* UITableViewCell+Effects.m */,
 				B91810B91B45FC3C00C4357A /* UIImage+Color.h */,
 				B91810BA1B45FC3C00C4357A /* UIImage+Color.m */,
-				B91810BC1B46021F00C4357A /* UIImage+Alpha.h */,
-				B91810BD1B46021F00C4357A /* UIImage+Alpha.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -312,7 +307,6 @@
 				B9B1143D1B469CFF00CE4127 /* UIImage+LazyLoading.m in Sources */,
 				B9B1143A1B469C5100CE4127 /* EventDetailViewController.m in Sources */,
 				B918106E1B4462F000C4357A /* AppDelegate.m in Sources */,
-				B91810BE1B46021F00C4357A /* UIImage+Alpha.m in Sources */,
 				B918106B1B4462F000C4357A /* main.m in Sources */,
 				B91810B81B45FC2500C4357A /* UITableViewCell+Effects.m in Sources */,
 				B91810B01B45D93000C4357A /* Group.m in Sources */,

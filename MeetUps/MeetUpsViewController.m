@@ -22,7 +22,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-//@property (nonatomic, strong) ApiGetter *getter;
 @property (nonatomic, strong) NSArray *events;
 @end
 
@@ -88,18 +87,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (void) unwindToContainerVC:(UIStoryboardSegue *)segue {
 }
 
-
-
-#pragma mark - Private methods
-
-//- (ApiGetter*) getter {
-//    if (!_getter) {
-//        _getter = [[ApiGetter alloc] init];
-//    }
-//    return _getter;
-//}
-
-#pragma mark - 
+#pragma mark -
 
 - (void) showErrorMessage:(NSString*) errorMessage {
     [self.tableView setHidden:YES];
@@ -185,28 +173,29 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MEET_UPS_CELL_IDENTIFIER];
     
+    // Default style without image background
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.textColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
+    
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
-    cell.backgroundColor = [UIColor whiteColor];
-    
+
     Event *event = self.events[indexPath.row];
     
     cell.textLabel.text = event.name;
     cell.detailTextLabel.text = event.group.name;
     
     if (event.group.photoUrl) {
-        
         [cell setBackgroundImageWithUrl:event.group.photoUrl];
-    } else {
-        
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.detailTextLabel.textColor = [UIColor blackColor];
     }
     
     return cell;
 }
+
 
 #pragma mark - Table view delegate
 

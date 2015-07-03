@@ -9,7 +9,6 @@
 #import "UITableViewCell+Effects.h"
 #import "UIImage+LazyLoading.h"
 #import "UIImage+Color.h"
-#import "UIImage+Alpha.h"
 
 @implementation UITableViewCell (LazyLoading)
 
@@ -23,20 +22,14 @@
 - (void) setBackgroundImage:(UIImage*) image {
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        UIImage *semiTransparentImage = [image imageByApplyingAlpha:0.75];
+        UIImage *semiTransparentImage = [image imageByApplyingColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.backgroundColor = [UIColor colorWithPatternImage:semiTransparentImage];
         });
     });
     
-    CGFloat luminance = [image luminance];
-    if (luminance > 0.5) {
-        self.textLabel.textColor = [UIColor blackColor];
-        self.detailTextLabel.textColor = [UIColor blackColor];
-    } else {
-        self.textLabel.textColor = [UIColor whiteColor];
-        self.detailTextLabel.textColor = [UIColor whiteColor];
-    }
+    self.textLabel.textColor = [UIColor whiteColor];
+    self.detailTextLabel.textColor = [UIColor whiteColor];
 }
 
 
