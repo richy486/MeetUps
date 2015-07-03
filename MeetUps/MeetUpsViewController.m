@@ -17,9 +17,14 @@
 
 NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
-@interface MeetUpsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface MeetUpsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate> {
+    BOOL _shouldLoadDataOnAppear;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) NSArray *events;
@@ -35,8 +40,12 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:nil
                                                                             action:nil];
-    
+    _shouldLoadDataOnAppear = YES;
     [self hideErrorMessage];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(valueChanged_refreshControl:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -49,17 +58,12 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
         [self performSegueWithIdentifier:ONBOARDING_SEGUE_IDENTIFIER sender:self];
         [defaults setBool:YES forKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
         [defaults synchronize];
-    } else {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
-
-            if (!self.locationManager) {
-                self.locationManager = [[CLLocationManager alloc] init];
-                self.locationManager.delegate = self;
-                [self.locationManager startUpdatingLocation];
-            }
-        } else {
-            [self showErrorMessage:NSLocalizedString(@"errorMessageLocationAccess", @"")];
-        }
+    } else if (_shouldLoadDataOnAppear) {
+        _shouldLoadDataOnAppear = NO;
+        
+        // Show activity indicator when refreshing from code
+        [self.activityIndicator startAnimating];
+        [self getEventsForCurrentLocation];
     }
 }
 
@@ -87,14 +91,42 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 - (void) unwindToContainerVC:(UIStoryboardSegue *)segue {
 }
 
+#pragma mark - Actions
+
+- (void) valueChanged_refreshControl:(id) sender {
+    [self getEventsForCurrentLocation];
+}
+
 #pragma mark -
 
+- (void) getEventsForCurrentLocation {
+    [self.refreshControl beginRefreshing];
+    
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        
+        if (!self.locationManager) {
+            self.locationManager = [[CLLocationManager alloc] init];
+            self.locationManager.delegate = self;
+        }
+        [self.locationManager startUpdatingLocation];
+    } else {
+        [self showErrorMessage:NSLocalizedString(@"errorMessageLocationAccess", @"")];
+    }
+}
+
 - (void) showErrorMessage:(NSString*) errorMessage {
+    
+    [self.refreshControl endRefreshing];
+    [self.activityIndicator stopAnimating];
+    
     [self.tableView setHidden:YES];
     [self.errorMessageLabel setHidden:NO];
     self.errorMessageLabel.text = errorMessage;
 }
 - (void) hideErrorMessage {
+    [self.refreshControl endRefreshing];
+    [self.activityIndicator stopAnimating];
+    
     [self.tableView setHidden:NO];
     [self.errorMessageLabel setHidden:YES];
 }
@@ -132,7 +164,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
             }
             
         } else {
-            [self hideErrorMessage];
+            
             
             NSComparator distanceComparator = ^(Event *eventA, Event *eventB) {
                 NSComparisonResult comparisonResult = [eventA.distance compare:eventB.distance];
@@ -154,6 +186,8 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
                 [events insertObject:event atIndex:insertIndex];
             }
             self.events = events;
+            
+            [self hideErrorMessage];
             [self.tableView reloadData];
         }
         

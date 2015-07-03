@@ -16,7 +16,6 @@ extern NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY;
 extern NSString *const API_URL_PLIST_KEY;
 extern NSString *const API_KEY_PLIST_KEY;
 
-
 // segues
 extern NSString *const ONBOARDING_SEGUE_IDENTIFIER;
 extern NSString *const UNWIND_TO_MEETUPS_IDENTIFIER;

@@ -16,7 +16,6 @@ NSString *const HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY = @"hasShownOnboarding";
 NSString *const API_URL_PLIST_KEY = @"MeetUpApiUrl";
 NSString *const API_KEY_PLIST_KEY = @"MeetUpApiKey";
 
-
 // segues
 NSString *const ONBOARDING_SEGUE_IDENTIFIER = @"onboarding";
 NSString *const UNWIND_TO_MEETUPS_IDENTIFIER = @"unwindToMeetUps";

@@ -30,6 +30,7 @@
         _container = [[NSMutableData alloc] init];
         
         self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
 }
 
@@ -42,6 +43,7 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (self.completionBlock) {
         
         NSError *error = nil;
@@ -57,6 +59,7 @@
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (self.completionBlock) {
         self.completionBlock(nil, error);
     }

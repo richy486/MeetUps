@@ -50,7 +50,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQh-RQ-a7z">
-                                <rect key="frame" x="150" y="249.5" width="300" height="101.5"/>
+                                <rect key="frame" x="150" y="249" width="300" height="101.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" priority="999" constant="300" id="1Ad-yG-PBw"/>
                                 </constraints>
@@ -59,13 +59,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ggT-xk-Cmp">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="ZQh-RQ-a7z" secondAttribute="centerX" id="3Mc-dB-6b8"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZQh-RQ-a7z" secondAttribute="trailing" id="Jgs-NI-aJ1"/>
                             <constraint firstItem="ZQh-RQ-a7z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Jm4-9c-UZU"/>
+                            <constraint firstAttribute="centerY" secondItem="ggT-xk-Cmp" secondAttribute="centerY" id="NE3-rd-VIL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4Re-eq-CwM" secondAttribute="bottom" id="SeB-LO-oMD"/>
+                            <constraint firstAttribute="centerX" secondItem="ggT-xk-Cmp" secondAttribute="centerX" id="VJz-Mn-zw5"/>
                             <constraint firstAttribute="trailing" secondItem="4Re-eq-CwM" secondAttribute="trailing" id="Y0Q-pd-DOa"/>
                             <constraint firstItem="4Re-eq-CwM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cgf-z0-XlV"/>
                             <constraint firstItem="4Re-eq-CwM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eJu-3Z-Ic5"/>
@@ -77,6 +83,7 @@
                         <barButtonItem key="leftBarButtonItem" image="clearIcon" id="Kyd-oC-WOm"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="ggT-xk-Cmp" id="Ir9-b0-sxv"/>
                         <outlet property="errorMessageLabel" destination="ZQh-RQ-a7z" id="czd-Rp-7iU"/>
                         <outlet property="tableView" destination="4Re-eq-CwM" id="5xt-Zj-TZZ"/>
                         <segue destination="IVg-IJ-aks" kind="presentation" identifier="onboarding" id="S9g-Uj-65H"/>
