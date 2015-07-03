@@ -137,6 +137,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     NSString *endpoint = [NSString stringWithFormat:@"2/open_events?and_text=False&offset=0&format=json"
                           "&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming"
                           "&fields=group_photos"
+                          "&order=distance"
                           "&category=34"
                           "&lat=%@"
                           "&lon=%@"
@@ -177,7 +178,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
             for (NSDictionary *eventDict in results) {
                 Event *event = [[Event alloc] initWithDictionary:eventDict];
                 
-                // Sort on insertion
+                // Sort on insertion, api ordering is aproximate
                 NSUInteger insertIndex = [events indexOfObject:event
                                                  inSortedRange:(NSRange){0, events.count}
                                                        options:NSBinarySearchingInsertionIndex
