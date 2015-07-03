@@ -23,7 +23,9 @@
 		B91810A91B45C32C00C4357A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B91810AB1B45C32C00C4357A /* InfoPlist.strings */; };
 		B91810AD1B45C3FC00C4357A /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = B91810AC1B45C3FC00C4357A /* DefaultPreferences.plist */; };
 		B91810B01B45D93000C4357A /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810AF1B45D93000C4357A /* Group.m */; };
-		B91810B31B45F6A600C4357A /* UITableViewCell+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810B21B45F6A600C4357A /* UITableViewCell+LazyLoading.m */; };
+		B91810B81B45FC2500C4357A /* UITableViewCell+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810B71B45FC2500C4357A /* UITableViewCell+LazyLoading.m */; };
+		B91810BB1B45FC3C00C4357A /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810BA1B45FC3C00C4357A /* UIImage+Color.m */; };
+		B91810BE1B46021F00C4357A /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = B91810BD1B46021F00C4357A /* UIImage+Alpha.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +67,12 @@
 		B91810AC1B45C3FC00C4357A /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
 		B91810AE1B45D93000C4357A /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = Models/Group.h; sourceTree = "<group>"; };
 		B91810AF1B45D93000C4357A /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Group.m; path = Models/Group.m; sourceTree = "<group>"; };
-		B91810B11B45F6A600C4357A /* UITableViewCell+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+LazyLoading.h"; sourceTree = "<group>"; };
-		B91810B21B45F6A600C4357A /* UITableViewCell+LazyLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+LazyLoading.m"; sourceTree = "<group>"; };
+		B91810B61B45FC2500C4357A /* UITableViewCell+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+LazyLoading.h"; sourceTree = "<group>"; };
+		B91810B71B45FC2500C4357A /* UITableViewCell+LazyLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+LazyLoading.m"; sourceTree = "<group>"; };
+		B91810B91B45FC3C00C4357A /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
+		B91810BA1B45FC3C00C4357A /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		B91810BC1B46021F00C4357A /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		B91810BD1B46021F00C4357A /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,13 +118,12 @@
 			children = (
 				B918106C1B4462F000C4357A /* AppDelegate.h */,
 				B918106D1B4462F000C4357A /* AppDelegate.m */,
+				B91810B51B45FC2500C4357A /* Categories */,
 				B91810941B45AC8900C4357A /* Models */,
 				B918106F1B4462F000C4357A /* MeetUpsViewController.h */,
 				B91810701B4462F000C4357A /* MeetUpsViewController.m */,
 				B91810961B45B02A00C4357A /* OnboardingViewController.h */,
 				B91810971B45B02A00C4357A /* OnboardingViewController.m */,
-				B91810B11B45F6A600C4357A /* UITableViewCell+LazyLoading.h */,
-				B91810B21B45F6A600C4357A /* UITableViewCell+LazyLoading.m */,
 				B918108E1B45AA6300C4357A /* ApiGetter.h */,
 				B918108F1B45AA6300C4357A /* ApiGetter.m */,
 				B91810721B4462F000C4357A /* Main.storyboard */,
@@ -170,6 +175,19 @@
 				B91810AF1B45D93000C4357A /* Group.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		B91810B51B45FC2500C4357A /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B91810B61B45FC2500C4357A /* UITableViewCell+LazyLoading.h */,
+				B91810B71B45FC2500C4357A /* UITableViewCell+LazyLoading.m */,
+				B91810B91B45FC3C00C4357A /* UIImage+Color.h */,
+				B91810BA1B45FC3C00C4357A /* UIImage+Color.m */,
+				B91810BC1B46021F00C4357A /* UIImage+Alpha.h */,
+				B91810BD1B46021F00C4357A /* UIImage+Alpha.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,9 +298,11 @@
 				B91810711B4462F000C4357A /* MeetUpsViewController.m in Sources */,
 				B91810931B45AC8400C4357A /* Event.m in Sources */,
 				B91810981B45B02A00C4357A /* OnboardingViewController.m in Sources */,
-				B91810B31B45F6A600C4357A /* UITableViewCell+LazyLoading.m in Sources */,
+				B91810BB1B45FC3C00C4357A /* UIImage+Color.m in Sources */,
 				B918106E1B4462F000C4357A /* AppDelegate.m in Sources */,
+				B91810BE1B46021F00C4357A /* UIImage+Alpha.m in Sources */,
 				B918106B1B4462F000C4357A /* main.m in Sources */,
+				B91810B81B45FC2500C4357A /* UITableViewCell+LazyLoading.m in Sources */,
 				B91810B01B45D93000C4357A /* Group.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

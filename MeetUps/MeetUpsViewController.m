@@ -103,10 +103,19 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     [getter getUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
 
         if (error || !jsonObject[@"results"]) {
+            NSString *problem = jsonObject[@"problem"];
+            if (problem && [problem.lowercaseString rangeOfString:@"throttled"].location != NSNotFound) {
+                [self showErrorMessage:NSLocalizedString(@"errorMessageApiThrottled", @"")];
+            } else {
+                [self showErrorMessage:NSLocalizedString(@"errorMessageApiConnection", @"")];
+            }
+            
             if (error) {
                 NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+            } else {
+                NSLog(@"error: %@", jsonObject);
             }
-            [self showErrorMessage:NSLocalizedString(@"errorMessageApiConnection", @"")];
+            
         } else {
             [self hideErrorMessage];
 
@@ -183,7 +192,10 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MEET_UPS_CELL_IDENTIFIER];
     
     cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
+    cell.backgroundColor = [UIColor whiteColor];
     
     Event *event = self.events[indexPath.row];
     
@@ -194,7 +206,9 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
         
         [cell setBackgroundImageWithUrl:event.group.photoUrl];
     } else {
-        cell.backgroundColor = [UIColor whiteColor];
+        
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
         [self getGroupPhotoForEvent:event];
     }
     

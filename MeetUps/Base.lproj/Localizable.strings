@@ -9,6 +9,7 @@
 "errorMessageLocationAccess" = "This app needs to use your location to function properly, please check your location settings in Settings.";
 "errorMessageLocationConnection" = "Problem finding user location, please check your settings and try again.";
 "errorMessageApiConnection" = "Problem finding meetup, please check your newtork settings and try again.";
+"errorMessageApiThrottled" = "Api access has been throttled, please try again later.";
 
 
 // Onboarding
