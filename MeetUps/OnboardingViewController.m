@@ -33,6 +33,10 @@
 
 - (IBAction)touchUpIn_continueButton:(UIButton*) button {
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
+    [defaults synchronize];
+    
     // Check if the app has been authorized already, e.g. from iOS Settings
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self performSegueWithIdentifier:UNWIND_TO_MEETUPS_IDENTIFIER sender:self];

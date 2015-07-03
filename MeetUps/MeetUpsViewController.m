@@ -56,8 +56,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     BOOL hasShownOnboarding = [defaults boolForKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
     if (!hasShownOnboarding) {
         [self performSegueWithIdentifier:ONBOARDING_SEGUE_IDENTIFIER sender:self];
-        [defaults setBool:YES forKey:HAS_SHOWN_ONBOARDING_USER_DEFAULT_KEY];
-        [defaults synchronize];
+        
     } else if (_shouldLoadDataOnAppear) {
         _shouldLoadDataOnAppear = NO;
         
