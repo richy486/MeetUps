@@ -20,3 +20,4 @@ NSString *const API_KEY_PLIST_KEY = @"MeetUpApiKey";
 // segues
 NSString *const ONBOARDING_SEGUE_IDENTIFIER = @"onboarding";
 NSString *const UNWIND_TO_MEETUPS_IDENTIFIER = @"unwindToMeetUps";
+NSString *const EVENT_DETAIL_SEGUE_IDENTIFIER = @"eventDetail";

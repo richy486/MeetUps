@@ -20,3 +20,4 @@ extern NSString *const API_KEY_PLIST_KEY;
 // segues
 extern NSString *const ONBOARDING_SEGUE_IDENTIFIER;
 extern NSString *const UNWIND_TO_MEETUPS_IDENTIFIER;
+extern NSString *const EVENT_DETAIL_SEGUE_IDENTIFIER;

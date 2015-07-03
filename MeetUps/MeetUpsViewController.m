@@ -8,10 +8,11 @@
 
 #import "MeetUpsViewController.h"
 #import "OnboardingViewController.h"
+#import "EventDetailViewController.h"
 #import "ApiGetter.h"
 #import "Event.h"
 #import "Group.h"
-#import "UITableViewCell+LazyLoading.h"
+#import "UITableViewCell+Effects.h"
 #import <CoreLocation/CoreLocation.h>
 
 NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
@@ -31,6 +32,11 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"eventsTitle", @"");
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", @"")
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    
     [self hideErrorMessage];
 }
 
@@ -63,8 +69,26 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     
 }
 
-- (IBAction)unwindToContainerVC:(UIStoryboardSegue *)segue {
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:EVENT_DETAIL_SEGUE_IDENTIFIER]
+        && [segue.destinationViewController respondsToSelector:@selector(setEvent:)]) {
+        
+        
+        NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+        Event *event = self.events[indexPath.row];
+        
+        if (event) {
+            [segue.destinationViewController setEvent:event];
+        }
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
+
+- (void) unwindToContainerVC:(UIStoryboardSegue *)segue {
+}
+
+
 
 #pragma mark - Private methods
 
@@ -220,7 +244,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 #pragma mark - Table view delegate
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:EVENT_DETAIL_SEGUE_IDENTIFIER sender:self];
 }
 
 #pragma mark - CLLocation manager delegate

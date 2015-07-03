@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+LazyLoading.h
+//  UITableViewCell+Effects.h
 //  MeetUps
 //
 //  Created by Richard Adem on 3/07/2015.
