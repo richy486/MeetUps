@@ -117,6 +117,7 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
 
     NSString *endpoint = [NSString stringWithFormat:@"2/open_events?and_text=False&offset=0&format=json"
                           "&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming"
+                          "&fields=group_photos"
                           "&category=34"
                           "&lat=%@"
                           "&lon=%@"
@@ -171,50 +172,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
     }];
 }
 
-- (void) getGroupPhotoForEvent:(Event*) event {
-    if (event) {
-        NSString *endpoint = [NSString stringWithFormat:@"2/photos?offset=0&format=json&photo-host=public&page=20&fields=&order=time&desc=True"
-                              "&group_id=%@"
-                              , event.group.groupId];
-        ApiGetter *getter = [[ApiGetter alloc] init];
-        [getter getUsingEndpoint:endpoint withCompletion:^(id jsonObject, NSError *error) {
-            if (error) {
-                NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
-            } else {
-                
-                BOOL found = NO;
-                if (jsonObject[@"results"]) {
-                    NSArray *results = jsonObject[@"results"];
-                    if (results.count > 0) {
-                        NSDictionary *firstResult = [results firstObject];
-                        NSString *photoUrlString = firstResult[@"photo_link"];
-                        if (event && [self.events containsObject:event]) {
-                            event.group.photoUrl = [NSURL URLWithString:photoUrlString];
-                            
-                            NSUInteger index = [self.events indexOfObject:event];
-                            if (index != NSNotFound) {
-                                NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
-                                for (NSIndexPath *indexPath in indexPaths) {
-                                    if (indexPath.row == index) {
-                                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                                        break;
-                                    }
-                                }
-                            }
-                            
-                            found = YES;
-                        }
-                    }
-                }
-                
-                if (!found) {
-                    event.group.photoUrl = [[NSURL alloc] init];
-                }
-            }
-        }];
-    }
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -246,7 +203,6 @@ NSString *const MEET_UPS_CELL_IDENTIFIER = @"meetUpsCell";
         
         cell.textLabel.textColor = [UIColor blackColor];
         cell.detailTextLabel.textColor = [UIColor blackColor];
-        [self getGroupPhotoForEvent:event];
     }
     
     return cell;

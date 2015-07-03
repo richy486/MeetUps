@@ -15,13 +15,17 @@
     if (self) {
         self.name = dict[@"name"];
         self.groupId = dict[@"id"];
-
+        
+        if (dict[@"photos"]) {
+            NSDictionary *firstResult = [dict[@"photos"] firstObject];
+            self.photoUrl = [NSURL URLWithString:firstResult[@"photo_link"]];
+        }
     }
     return self;
 }
 
 - (NSString*) description {
-    return [NSString stringWithFormat:@"%@, name: %@, id: %.02f", [super description], self.name, self.groupId];
+    return [NSString stringWithFormat:@"%@, name: %@, id: %@", [super description], self.name, self.groupId];
 }
 
 @end
