@@ -13,10 +13,13 @@
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *venueLabel;
 @property (weak, nonatomic) IBOutlet UITextView *descritionTextView;
 
 @end
@@ -43,6 +46,15 @@
         self.titleLabel.text = self.event.name;
         self.groupNameLabel.text = self.event.group.name;
         
+        if (self.event.time) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateStyle = kCFDateFormatterMediumStyle;
+            dateFormatter.timeStyle = NSDateFormatterShortStyle;
+            self.timeLabel.text = [dateFormatter stringFromDate:self.event.time];
+        }
+        
+        self.venueLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"venue", @""), self.event.venueName];
+        
         NSError *error = nil;
         NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[self.event.descriptionHtml dataUsingEncoding:NSUTF8StringEncoding]
                                                                                  options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
@@ -60,7 +72,10 @@
 - (void) viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    self.scrollViewWidthConstraint.constant = CGRectGetWidth(self.scrollView.frame);
+    self.imageViewWidthConstraint.constant = CGRectGetWidth(self.scrollView.frame);
+    if (!self.event.group.photoUrl) {
+        self.imageViewHeightConstraint.constant = 0;
+    }
 }
 
 #pragma mark - Memory manager

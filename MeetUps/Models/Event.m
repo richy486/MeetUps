@@ -20,6 +20,26 @@
         }
         self.descriptionHtml = dict[@"description"];
         self.distance = dict[@"distance"];
+        
+        NSDictionary *venue = dict[@"venue"];
+        if (venue) {
+            self.latitude = venue[@"lat"];
+            self.longitude = venue[@"lon"];
+            self.venueName = venue[@"name"];
+        }
+        
+        // Event duration in milliseconds
+        NSNumber *duration = dict[@"duration"];
+        if (duration) {
+            self.duration = ((float)[duration integerValue]) / 1000;
+        }
+        
+        // UTC start time of the event, in milliseconds since the epoch
+        NSNumber *time = dict[@"time"];
+        if (time) {
+            NSTimeInterval timeInterval = ((float)[time integerValue]) / 1000;
+            self.time = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        }
     }
     return self;
 }
