@@ -11,11 +11,13 @@
 #import "Group.h"
 #import "UIImage+LazyLoading.h"
 
-NSString *const EVENT_DETAIL_CELL_IDENTIFIER = @"eventDetailCell";
-
-@interface EventDetailViewController () <UITableViewDataSource, UITabBarDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface EventDetailViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @end
 
@@ -30,37 +32,36 @@ NSString *const EVENT_DETAIL_CELL_IDENTIFIER = @"eventDetailCell";
                                                                             target:nil
                                                                             action:nil];
     
-    if (self.event && self.event.group.photoUrl) {
-        [UIImage imageWithUrl:self.event.group.photoUrl complete:^(UIImage *image) {
-            [self.headerImageView setImage:image];
-        }];
-    }
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.event) {
-        return 1;
+        
+        if (self.event.group.photoUrl) {
+            [UIImage imageWithUrl:self.event.group.photoUrl complete:^(UIImage *image) {
+                [self.headerImageView setImage:image];
+            }];
+        }
+        
+        self.titleLabel.text = self.event.name;
+        self.groupNameLabel.text = self.event.group.name;
+        
+        NSError *error = nil;
+        NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[self.event.descriptionHtml dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                 options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                           NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)}
+                                                                      documentAttributes:nil
+                                                                                   error:&error];
+        if (error) {
+            NSLog(@"error: %@, %@", [error localizedDescription], [error localizedFailureReason]);
+        } else {
+            self.descriptionLabel.attributedText = descriptionString;
+        }
     }
-    
-    return 0;
 }
 
-- (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:EVENT_DETAIL_CELL_IDENTIFIER];
-    
-    cell.textLabel.text = self.event.name;
-    cell.detailTextLabel.text = self.event.group.name;
-    
-    
-    
-    return cell;
-}
-
-#pragma mark - Table view delegate
-
-
+    - (void) viewDidLayoutSubviews {
+        [super viewDidLayoutSubviews];
+        
+        self.scrollViewWidthConstraint.constant = CGRectGetWidth(self.scrollView.frame);
+    }
 
 #pragma mark - Memory manager
 

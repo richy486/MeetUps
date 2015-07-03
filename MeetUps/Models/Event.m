@@ -18,6 +18,7 @@
         if (dict[@"group"]) {
             self.group = [[Group alloc] initWithDictionary:dict[@"group"]];
         }
+        self.descriptionHtml = dict[@"description"];
     }
     return self;
 }
