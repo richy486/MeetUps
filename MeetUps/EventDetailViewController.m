@@ -56,7 +56,9 @@
         self.venueLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"venue", @""), self.event.venueName];
         
         NSError *error = nil;
-        NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[self.event.descriptionHtml dataUsingEncoding:NSUTF8StringEncoding]
+        
+        NSString *modifiedHtml = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 15\">%@</span>", self.event.descriptionHtml];
+        NSAttributedString *descriptionString = [[NSAttributedString alloc] initWithData:[modifiedHtml dataUsingEncoding:NSUTF8StringEncoding]
                                                                                  options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
                                                                                            NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)}
                                                                       documentAttributes:nil
